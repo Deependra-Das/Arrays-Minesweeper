@@ -6,7 +6,7 @@ namespace Gameplay
 	{
 		BoardService::BoardService()
 		{
-			BoardController* board_controller = new BoardController();
+			board_controller = new BoardController();
 		}
 
 		BoardService::~BoardService()
