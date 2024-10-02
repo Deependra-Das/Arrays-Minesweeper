@@ -19,6 +19,8 @@ namespace Gameplay
 			void initializeButtonImage(float width, float height);
 			void setCellTexture();
 			sf::Vector2f getCellScreenPosition(float width, float height);
+			void registerButtonCallback();
+			void cellButtonCallback(UI::UIElement::ButtonType button_type);
 
 		public:
 			CellView(CellController* controller);
@@ -27,6 +29,7 @@ namespace Gameplay
 			void initialize(float cell_width, float cell_height);
 			void update();
 			void render();
+	
 		};
 	}
 }
