@@ -18,7 +18,7 @@ namespace Gameplay
 			const float cell_left_offset = 583.f;
 			void initializeButtonImage(float width, float height);
 			void setCellTexture();
-			sf::Vector2f getCellScreenPosition();
+			sf::Vector2f getCellScreenPosition(float width, float height);
 
 		public:
 			CellView(CellController* controller);
