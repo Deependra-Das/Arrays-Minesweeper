@@ -31,11 +31,16 @@ namespace Gameplay
 
 	void GameplayService::startGame()
 	{
-		gameplay_controller->reset();
+		gameplay_controller->restart();
 	}
 
 	void GameplayService::destroy()
 	{
 		delete(gameplay_controller);
+	}
+
+	float GameplayService::getRemainingTime()
+	{
+		return gameplay_controller->getRemainingTime();
 	}
 }

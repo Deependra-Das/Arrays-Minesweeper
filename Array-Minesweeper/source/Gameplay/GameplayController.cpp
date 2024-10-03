@@ -22,7 +22,7 @@ namespace Gameplay
 
 	void GameplayController::update()
 	{
-
+		updateRemainingTime();
 	}
 
 	void GameplayController::render()
@@ -30,8 +30,19 @@ namespace Gameplay
 
 	}
 
-	void GameplayController::reset()
+	void GameplayController::restart()
 	{
 		ServiceLocator::getInstance()->getBoardService()->resetBoard();
+		remaining_time = max_duration;
+	}
+
+	void GameplayController::updateRemainingTime()
+	{
+		remaining_time -= ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
+	}
+
+	float GameplayController::getRemainingTime() 
+	{ 
+		return remaining_time;
 	}
 }
