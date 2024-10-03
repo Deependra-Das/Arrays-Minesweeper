@@ -13,16 +13,23 @@ namespace UI
 		{
 		private:
 			UI::UIElement::TextView* time_text;
+			UIElement::TextView* mine_text;
+
 			const int font_size = 110;
 			const sf::Color text_color = sf::Color::Red;
 
 			const float time_text_top_offset = 65.f;
 			const float time_text_left_offset = 1090.f;
 
+			const float mine_text_top_offset = 65.f;
+			const float mine_text_left_offset = 660.f;
+
 			void createTexts();
 			void initializeTexts();
 			void initializeTimeText();
+			void initializeMineText();
 			void updateTimeText();
+			void updateMineText();
 			void destroy();
 
 		public:

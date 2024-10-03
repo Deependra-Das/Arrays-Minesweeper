@@ -43,4 +43,9 @@ namespace Gameplay
 	{
 		return gameplay_controller->getRemainingTime();
 	}
+
+	int GameplayService::getMinesCount()
+	{
+		return gameplay_controller->getMinesCount();
+	}
 }

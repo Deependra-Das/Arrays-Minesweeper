@@ -23,6 +23,7 @@ namespace Gameplay
             void update();
             void render();
             void reset();
+            int getMinesCount();
 
         private:
             BoardView* board_view;
@@ -33,7 +34,7 @@ namespace Gameplay
             void deleteBoard();
             void deleteCells();
             void initializeCells();
-        
+
 		};
 	}
 }
