@@ -1,5 +1,7 @@
 #pragma once
 #include "../../header/Gameplay/Board/BoardController.h"
+#include "../../UI/UIElement/ButtonView.h"
+#include "../../header/Gameplay/Cell/CellController.h"
 
 namespace Gameplay
 {
@@ -23,6 +25,7 @@ namespace Gameplay
 			void render();
 			void resetBoard();
 			int getMinesCount();
+			void processCellInput(Cell::CellController* cell_controller, UI::UIElement::ButtonType button_type);
 		};
 	}
 }
