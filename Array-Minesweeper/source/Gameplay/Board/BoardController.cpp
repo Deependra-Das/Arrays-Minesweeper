@@ -235,6 +235,22 @@ namespace Gameplay
 			}
 		}
 
+		void BoardController::openAllCells()
+		{
+			if (board_state == BoardState::FIRST_CELL)
+			{
+				populateBoard(sf::Vector2i(0, 0));
+			}
+
+			for (int a = 0; a < number_of_rows; ++a)
+			{
+				for (int b = 0; b < number_of_columns; ++b)
+				{
+					board_cells[a][b]->openCell();
+				}
+			}
+		}
+
 		BoardState BoardController::getBoardState()
 		{
 			return board_state;
