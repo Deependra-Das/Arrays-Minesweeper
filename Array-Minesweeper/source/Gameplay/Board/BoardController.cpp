@@ -137,6 +137,9 @@ namespace Gameplay
 
 		void BoardController::processCellInput(Cell::CellController* cell_controller, UI::UIElement::ButtonType button_type)
 		{
+			if (board_state == BoardState::COMPLETED)
+				return;
+
 			switch (button_type)
 			{
 			case UI::UIElement::ButtonType::LEFT_MOUSE_BUTTON:
@@ -174,23 +177,6 @@ namespace Gameplay
 		{
 			ServiceLocator::getInstance()->getSoundService()->playSound(SoundType::BUTTON_CLICK);
 			openEmptyCells(cell_position);
-		}
-
-		void BoardController::flagCell(sf::Vector2i cell_position)
-		{
-			switch (board_cells[cell_position.x][cell_position.y]->getCellState())
-			{
-			case::Gameplay::Cell::CellState::FLAGGED:
-				ServiceLocator::getInstance()->getSoundService()->playSound(SoundType::FLAG);
-				flagged_cells--; 
-				break;
-			case::Gameplay::Cell::CellState::HIDDEN:
-				ServiceLocator::getInstance()->getSoundService()->playSound(SoundType::FLAG);
-				flagged_cells++; 
-				break;
-			}
-
-			board_cells[cell_position.x][cell_position.y]->flagCell();
 		}
 
 		void BoardController::populateBoard(sf::Vector2i cell_position)
@@ -315,6 +301,35 @@ namespace Gameplay
 
 					sf::Vector2i next_cell_position = sf::Vector2i(a + cell_position.x, b + cell_position.y);
 					openCell(next_cell_position);
+				}
+			}
+		}
+
+		void BoardController::flagCell(sf::Vector2i cell_position)
+		{
+			switch (board_cells[cell_position.x][cell_position.y]->getCellState())
+			{
+			case::Gameplay::Cell::CellState::FLAGGED:
+				ServiceLocator::getInstance()->getSoundService()->playSound(SoundType::FLAG);
+				flagged_cells--;
+				break;
+			case::Gameplay::Cell::CellState::HIDDEN:
+				ServiceLocator::getInstance()->getSoundService()->playSound(SoundType::FLAG);
+				flagged_cells++;
+				break;
+			}
+
+			board_cells[cell_position.x][cell_position.y]->flagCell();
+		}
+
+		void BoardController::flagAllMines()
+		{
+			for (int row = 0; row < number_of_rows; ++row)
+			{
+				for (int col = 0; col < number_of_columns; ++col)
+				{
+					if (board_cells[row][col]->getCellValue() == CellValue::MINE && board_cells[row][col]->getCellState() != CellState::FLAGGED)
+						flagCell(sf::Vector2i(row, col));
 				}
 			}
 		}

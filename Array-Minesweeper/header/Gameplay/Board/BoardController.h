@@ -38,6 +38,7 @@ namespace Gameplay
             BoardState getBoardState();
             void setBoardState(BoardState state);
             void showBoard();
+            void flagAllMines();
 
         private:
             BoardView* board_view;
