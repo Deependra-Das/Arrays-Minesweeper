@@ -32,6 +32,7 @@ namespace Gameplay
             void reset();
             int getMinesCount();
             void processCellInput(Cell::CellController* cell_controller, UI::UIElement::ButtonType button_type);
+            void processCellValue(sf::Vector2i cell_position);
             BoardState getBoardState();
             void setBoardState(BoardState state);
 
