@@ -54,6 +54,11 @@ namespace Gameplay
 			return cell_model->getCellValue();
 		}
 
+		void CellController::setCellValue(CellValue value)
+		{
+			cell_model->setCellValue(value);
+		}
+
 		void CellController::reset()
 		{
 			cell_model->reset();
