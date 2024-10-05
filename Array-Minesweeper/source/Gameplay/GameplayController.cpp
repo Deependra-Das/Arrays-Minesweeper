@@ -1,9 +1,13 @@
 #include "../../header/Gameplay/GameplayController.h"
 #include "../../header/Global/ServiceLocator.h"
+#include "../../header/Main/GameService.h"
+#include "../../header/Gameplay/Board/BoardService.h"
 
 namespace Gameplay
 {
 	using namespace Global;
+	using namespace Main;
+	using namespace Board;
 
 	GameplayController::GameplayController()
 	{
@@ -23,6 +27,11 @@ namespace Gameplay
 	void GameplayController::update()
 	{
 		updateRemainingTime();
+		if (isTimeOver())
+		{
+			endGame(GameResult::LOST);
+		}
+		
 	}
 
 	void GameplayController::render()
@@ -34,6 +43,11 @@ namespace Gameplay
 	{
 		ServiceLocator::getInstance()->getBoardService()->resetBoard();
 		remaining_time = max_duration;
+	}
+
+	bool GameplayController::isTimeOver() 
+	{ 
+		return (remaining_time <= 1);
 	}
 
 	void GameplayController::updateRemainingTime()
@@ -49,5 +63,53 @@ namespace Gameplay
 	int GameplayController::getMinesCount()
 	{
 		return ServiceLocator::getInstance()->getBoardService()->getMinesCount();
+	}
+
+	void GameplayController::endGame(GameResult result)
+	{
+		switch (result)
+		{
+		case GameResult::WON:
+			gameWon();
+			break;
+		case GameResult::LOST:
+			gameLost();
+			break;
+		default:
+			break;
+		}
+	}
+
+	void GameplayController::gameWon()
+	{
+		game_result = GameResult::WON;
+		ServiceLocator::getInstance()->getBoardService()->flagAllMines();
+		ServiceLocator::getInstance()->getBoardService()->setBoardState(BoardState::COMPLETED);
+		ServiceLocator::getInstance()->getSoundService()->playSound(Sound::SoundType::GAME_WON);
+	}
+
+	void GameplayController::gameLost()
+	{
+		if (game_result == GameResult::NONE)
+		{
+			game_result = GameResult::LOST;
+			beginGameOverTimer();
+			ServiceLocator::getInstance()->getBoardService()->showBoard();
+			ServiceLocator::getInstance()->getBoardService()->setBoardState(BoardState::COMPLETED);
+		}
+		else
+		{
+			showCredits();
+		}
+
+	}
+	void GameplayController::beginGameOverTimer() 
+	{ 
+		remaining_time = game_over_time; 
+	}
+
+	void GameplayController::showCredits() 
+	{ 
+		GameService::setGameState(GameState::CREDITS); 
 	}
 }
