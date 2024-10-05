@@ -19,6 +19,7 @@ namespace Gameplay
 
 		void updateRemainingTime();
 		void beginGameOverTimer();
+		bool isTimeOver();
 
 	public:
 		GameplayController();

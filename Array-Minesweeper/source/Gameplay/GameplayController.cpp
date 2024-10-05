@@ -27,6 +27,11 @@ namespace Gameplay
 	void GameplayController::update()
 	{
 		updateRemainingTime();
+		if (isTimeOver())
+		{
+			endGame(GameResult::LOST);
+		}
+		
 	}
 
 	void GameplayController::render()
@@ -38,6 +43,11 @@ namespace Gameplay
 	{
 		ServiceLocator::getInstance()->getBoardService()->resetBoard();
 		remaining_time = max_duration;
+	}
+
+	bool GameplayController::isTimeOver() 
+	{ 
+		return (remaining_time <= 1);
 	}
 
 	void GameplayController::updateRemainingTime()
