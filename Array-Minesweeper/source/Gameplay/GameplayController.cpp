@@ -41,6 +41,7 @@ namespace Gameplay
 
 	void GameplayController::restart()
 	{
+		game_result = GameResult::NONE;
 		ServiceLocator::getInstance()->getBoardService()->resetBoard();
 		remaining_time = max_duration;
 	}
@@ -52,6 +53,8 @@ namespace Gameplay
 
 	void GameplayController::updateRemainingTime()
 	{
+		if (game_result == GameResult::WON)
+			return;
 		remaining_time -= ServiceLocator::getInstance()->getTimeService()->getDeltaTime();
 	}
 

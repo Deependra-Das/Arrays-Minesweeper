@@ -131,6 +131,12 @@ namespace Gameplay
 				}
 				processCellValue(cell_position);
 				board_cells[cell_position.x][cell_position.y]->openCell();
+
+				if (areAllCellOpen())
+				{
+					ServiceLocator::getInstance()->getGameplayService()->endGame(GameResult::WON);
+				}
+					
 			}
 
 		}
@@ -204,6 +210,19 @@ namespace Gameplay
 					board_cells[i][j]->setCellValue(CellValue::MINE);
 				}
 			}
+			printf("\n");
+
+			for (int a = 0; a < number_of_rows; ++a)
+			{
+				for (int b = 0; b < number_of_columns; ++b)
+				{
+					if (board_cells[a][b]->getCellValue() == CellValue::MINE)
+					{
+						printf("\n %d %d",a,b);
+					}
+				}
+			}
+
 		}
 
 		int BoardController::countMinesAround(sf::Vector2i cell_position)
@@ -342,6 +361,26 @@ namespace Gameplay
 		void BoardController::setBoardState(BoardState state)
 		{
 			board_state = state;
+		}
+
+
+		bool BoardController::areAllCellOpen()
+		{
+			int total_cell_count = number_of_rows * number_of_columns;
+			int open_cell_count = 0;
+
+			for (int a = 0; a < number_of_rows; a++)
+			{
+				for (int b = 0; b < number_of_columns; b++)
+				{
+					if (board_cells[a][b]->getCellState() == CellState::OPEN)
+					{
+						open_cell_count++;
+					}
+				}
+			}
+
+			return (total_cell_count - open_cell_count == mines_count);
 		}
 	}
 }
