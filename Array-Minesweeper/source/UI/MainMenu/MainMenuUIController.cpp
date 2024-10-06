@@ -18,6 +18,7 @@ namespace UI
 
         MainMenuUIController::MainMenuUIController()
         {
+            createText();
             createImage();
             createButtons();
         }
@@ -27,8 +28,14 @@ namespace UI
             destroy();
         }
 
+        void MainMenuUIController::createText()
+        {
+            title_text = new TextView();
+        }
+
         void MainMenuUIController::initialize()
         {
+            initializeText();
             initializeBackgroundImage();
             initializeButtons();
             registerButtonCallback();
@@ -44,6 +51,12 @@ namespace UI
             play_button = new ButtonView();
             instructions_button = new ButtonView();
             quit_button = new ButtonView();
+        }
+
+        void MainMenuUIController::initializeText()
+        {
+            title_text->initialize(game_title, sf::Vector2f(0, text_top_offset), FontType::BUBBLE_BOBBLE, font_size, text_color);
+            title_text->setTextCentreAligned();
         }
 
         void MainMenuUIController::initializeBackgroundImage()
@@ -93,6 +106,7 @@ namespace UI
 
         void MainMenuUIController::update()
         {
+            title_text->update();
             background_image->update();
             play_button->update();
             instructions_button->update();
@@ -101,6 +115,7 @@ namespace UI
 
         void MainMenuUIController::render()
         {
+            title_text->render();
             background_image->render();
             play_button->render();
             instructions_button->render();
@@ -109,6 +124,7 @@ namespace UI
 
         void MainMenuUIController::show()
         {
+            title_text->show();
             background_image->show();
             play_button->show();
             instructions_button->show();
@@ -117,6 +133,7 @@ namespace UI
 
         void MainMenuUIController::destroy()
         {
+            delete (title_text);
             delete (play_button);
             delete (instructions_button);
             delete (quit_button);

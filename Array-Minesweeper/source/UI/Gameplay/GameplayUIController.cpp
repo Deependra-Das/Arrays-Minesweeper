@@ -28,6 +28,8 @@ namespace UI
         {
             time_text = new TextView();
             mine_text = new TextView();
+            time_label_text = new TextView();
+            mine_label_text = new TextView();
         }
 
         void GameplayUIController::createButton()
@@ -52,6 +54,8 @@ namespace UI
         {
             time_text->render();
             mine_text->render();
+            mine_label_text->render();
+            time_label_text->render();
             restart_button->render();
         }
 
@@ -59,14 +63,12 @@ namespace UI
         {
             initializeTimeText();
             initializeMineText();
+            initializeLabelText();
         }
 
         void GameplayUIController::initializeButton()
         {
-            restart_button->initialize("Restart Button",
-                Config::restart_button_texture_path,
-                button_width, button_height,
-                sf::Vector2f(restart_button_left_offset, restart_button_top_offset));
+            restart_button->initialize("Restart Button", Config::restart_button_texture_path, button_width, button_height,sf::Vector2f(restart_button_left_offset, restart_button_top_offset));
 
             registerButtonCallback();
         }
@@ -81,11 +83,18 @@ namespace UI
             time_text->initialize("000", sf::Vector2f(time_text_left_offset, time_text_top_offset), FontType::ROBOTO, font_size, text_color);
         }
 
+        void GameplayUIController::initializeLabelText()
+        {
+            mine_label_text->initialize("Mines Left", sf::Vector2f(mine_text_left_offset, mine_text_top_offset), FontType::DS_DIGIB, label_font_size, label_text_color);
+            time_label_text->initialize("Time Left", sf::Vector2f(time_text_left_offset, time_text_top_offset), FontType::DS_DIGIB, label_font_size, label_text_color);
+        }
         void GameplayUIController::show()
         {
             time_text->show();
             mine_text->show();
             restart_button->show();
+            mine_label_text->show();
+            time_label_text->show();
         }
 
         void GameplayUIController::updateTimeText()
@@ -117,6 +126,8 @@ namespace UI
             delete (time_text);
             delete (mine_text);
             delete (restart_button);
+            delete (mine_label_text);
+            delete (time_label_text);
         }
 
         void GameplayUIController::registerButtonCallback()
